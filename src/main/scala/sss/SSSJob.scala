@@ -27,14 +27,14 @@ object SSSJob {
   })
 
   val ili = udf((ary: mutable.WrappedArray[String], patientType: Int) => {
-    if (patientType == 2) { // OPD only
+    if (patientType == 1) { // OPD only
       //J00, J02.9, J06.9, J09,J10,J11
-      if (ary.exists(s => s.matches(raw"^(J00|J02.9|J06.9|J09|J10|J11)"))) 1 else 0
+      if (ary.exists(s => s.matches(raw"^(J00|J029|J069|J09|J10|J11)"))) 1 else 0
     } else 0
   })
 
   val sari = udf((ary: mutable.WrappedArray[String], patientType: Int) => {
-    if (patientType == 1) { // IPD only
+    if (patientType == 2) { // IPD only
       // J00-J22
       if (ary.exists(s => s.matches(raw"^J[01][0-9]") || s.matches(raw"^J2[0-2]"))) 1 else 0
     } else 0
